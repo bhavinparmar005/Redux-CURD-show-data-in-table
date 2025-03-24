@@ -2,16 +2,36 @@ import React, { useState } from 'react'
 import './App.css'
 
 const App = () => {
-  const [data,setData]=useState({
-    name:"",
-    address:"",
-    postcode:"",
-    rating:"",
-    typeoffood:""
+  const [data, setData] = useState({
+    name: "",
+    address: "",
+    postcode: "",
+    rating: "",
+    typeoffood: ""
   })
 
-  const resiveData =(e)=>{
-    const name =e.target.name;
+  const resiveData = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+   setData(pre => ({...pre,[name]:value}));
+
+
+
+  }
+
+  const handelSubmit = (e) => {
+    e.preventDefault();
+
+    console.log(data);
+
+    setData({
+      name: "",
+      address: "",
+      postcode: "",
+      rating: "",
+      typeoffood: ""
+    })
+    
 
   }
 
@@ -20,32 +40,32 @@ const App = () => {
       <div className="container">
         <div className="form-container">
           <h2 className="text-center mb-4">Food Review Form</h2>
-          <form>
+          <form onSubmit={handelSubmit}>
             <div className="mb-3">
               <label htmlFor="name" className="form-label">Name</label>
-              <input type="text" className="form-control" id="name" placeholder="Enter your name" />
+              <input type="text" className="form-control" id="name" placeholder="Enter your name" name='name' onChange={resiveData}  value={data.name}/>
             </div>
             <div className="mb-3">
               <label htmlFor="address" className="form-label">Address</label>
-              <textarea className="form-control" id="address" rows={3} placeholder="Enter your address" defaultValue={""} />
+              <textarea className="form-control" id="address" rows={'3'} placeholder="Enter your address"   name='address'  onChange={resiveData} value={data.address}/>
             </div>
             <div className="mb-3">
               <label htmlFor="postcode" className="form-label">Postcode</label>
-              <input type="text" className="form-control" id="postcode" placeholder="Enter your postcode" />
+              <input type="text" className="form-control" id="postcode" placeholder="Enter your postcode" name='postcode' onChange={resiveData} value={data.postcode} />
             </div>
             <div className="mb-3">
               <label htmlFor="rating" className="form-label">Rating</label>
-              <input type="number" className="form-control" id="rating" placeholder="Give a rating (1-5)" />
+              <input type="number" className="form-control" id="rating" placeholder="Give a rating (1-5)"  name='rating' onChange={resiveData} value={data.rating}/>
             </div>
             <div className="mb-3">
               <label htmlFor="typeOfFood" className="form-label">Type of Food</label>
-              <select className="form-select" id="typeOfFood">
+              <select className="form-select" id="typeOfFood" name='typeoffood' onChange={resiveData} value={data.typeoffood} >
                 <option selected>Select food type</option>
-                <option value={1}>Italian</option>
-                <option value={2}>Chinese</option>
-                <option value={3}>Mexican</option>
-                <option value={4}>Indian</option>
-                <option value={5}>Others</option>
+                <option value={"Italian"}>Italian</option>
+                <option value={"Chinese"}>Chinese</option>
+                <option value={"Mexican"}>Mexican</option>
+                <option value={"Indian"}>Indian</option>
+                <option value={"Others"}>Others</option>
               </select>
             </div>
             <button type="submit" className="btn btn-primary w-100">Submit</button>
