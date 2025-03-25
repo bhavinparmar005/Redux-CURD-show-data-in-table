@@ -1,0 +1,25 @@
+tbody tr:hover {
+    background-color: #f1f1f1 !important;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.search-container {
+    width: 30% !important;
+
+}
+@media (max-width: 768px) {
+    .action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    .search-container {
+        width: 100% !important;
+        margin-top: 10px;
+    }
+}
+@media (min-width: 1200px) {
+    .action-buttons button {
+        margin: 5px;
+    }
+}
