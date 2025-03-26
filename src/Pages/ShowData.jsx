@@ -29,12 +29,6 @@ function ShowData() {
     // console.log(fillterData);
 
 
-    const editPageData = (id) => {
-        console.log(id);
-
-
-        nav('/editpage')
-    }
 
     const deleteData = (id) => {
 
@@ -86,7 +80,7 @@ function ShowData() {
                                             <td> {val.rating} <i className="bi bi-star-fill text-warning" /></td>
                                             <td> {val.typeoffood}</td>
                                             <td className="action-buttons">
-                                                <button className="btn btn-primary btn-sm w-100" onClick={() => editPageData(val.id)}><i className="bi bi-pencil-square fs-5" /></button>
+                                                <button className="btn btn-primary btn-sm w-100" onClick={() => nav(`/editpage` , {state:val})}><i className="bi bi-pencil-square fs-5" /></button>
                                                 <button className="btn btn-danger btn-sm w-100" onClick={() => deleteData(val.id)}><i className="bi bi-trash fs-5" /></button>
                                             </td>
                                         </tr>

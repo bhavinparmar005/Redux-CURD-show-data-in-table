@@ -1,26 +1,24 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import {editReviwe} from '../feature/FoodReviewSlice'
+import { editReviwe } from '../feature/FoodReviewSlice'
+import { useLocation, useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 function EditPage() {
   const dispacth = useDispatch()
-
-  const { foodReview } = useSelector((state) => {
-    return (
-      state.foodReview
-    )
-  })
-
+  let editData = useLocation()
+  let nav = useNavigate()
 
   const [data, setData] = useState({
-    id: ""|| foodReview.id,
-    name: "" || foodReview.name,
-    address: "" || foodReview.address,
-    postcode: "" || foodReview.postcode,
-    rating: "" || foodReview.rating,
-    typeoffood: "" || foodReview.typeoffood
+    id: "" || editData.state.id,
+    name: "" || editData.state.name,
+    address: "" || editData.state.address,
+    postcode: "" || editData.state.postcode,
+    rating: "" || editData.state.rating,
+    typeoffood: "" || editData.state.typeoffood
   })
+
+
   const resiveData = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -29,7 +27,7 @@ function EditPage() {
   const handelSubmit = (e) => {
     e.preventDefault();
     console.log(data);
-    //  dispacth(addReviwe(data))
+    dispacth(editReviwe(data))
     // console.log(foodReview);
 
     setData({
@@ -39,6 +37,18 @@ function EditPage() {
       rating: "",
       typeoffood: ""
     })
+
+    setTimeout(() => {
+      nav('/showpage')
+    }, 2000);
+
+    Swal.fire({
+      title: " Edit Food Review Successfully",
+      icon: "success",
+      draggable: true,
+      showConfirmButton: false,
+      timer: 1900
+    });
   }
   return (
     <>

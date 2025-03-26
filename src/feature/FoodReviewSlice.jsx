@@ -12,8 +12,23 @@ const foodReviewSlice = createSlice({
             state.foodReview.push(action.payload);
         },
         editReviwe: (state, action) => {
-            const index = state.foodReview.findIndex(item => item.id === action.payload.id);
-            state.foodReview[index] = action.payload;
+            console.log(action.payload);
+            let editData = state.foodReview.find((val)=>{
+                return(
+                    val.id == action.payload.id
+                )
+            })
+
+       if(editData){
+        
+        editData.name=action.payload.name
+        editData.address=action.payload.address
+        editData.postcode=action.payload.postcode
+        editData.rating=action.payload.rating
+        editData.typeoffood=action.payload.typeoffood
+
+       }
+            
         },
         deleteReviwe: (state, action) => {
             state.foodReview = state.foodReview.filter(item => item.id !== action.payload);
