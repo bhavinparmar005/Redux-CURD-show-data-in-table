@@ -1,29 +1,49 @@
 
-import React from 'react'
+import React, { use, useState } from 'react'
 import './ShowData.css'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
+import { deleteReviwe } from '../feature/FoodReviewSlice'
+import { useDispatch } from 'react-redux'
 
 
 function ShowData() {
+
+    let nav = useNavigate()
+
+    let dispacth = useDispatch()
+
+    const [searchQuery, setSearchQuery] = useState('');
 
     const { foodReview } = useSelector((state) => {
         return (
             state.foodReview
         )
     })
-    console.log(foodReview);
+    const fillterData = foodReview.filter((val) => {
+        return (
+            val.name.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+    })
 
-    const fillterData = (e) => {
-        let input = e.toLowerCase()
+    // console.log(fillterData);
 
-        let fillter = foodReview.filter((val)=>{
-            return(
-                val.name.toLowerCase().includes(input)
-            )
-        })
-        console.log(fillter);
-        
+
+    const editPageData = (id) => {
+        console.log(id);
+
+
+        nav('/editpage')
     }
+
+    const deleteData = (id) => {
+
+      
+        dispacth(deleteReviwe(id))
+
+}
+
+
 
     return (
         <>
@@ -39,7 +59,7 @@ function ShowData() {
                         </select>
                         <span> results per page</span>
                     </div>
-                    <input type="text" id="search" className="form-control search-container " placeholder="Filter in records..." onChange={(e) => fillterData(e.target.value)} />
+                    <input type="text" id="search" className="form-control search-container " placeholder="Filter in records..." onChange={(e) => setSearchQuery(e.target.value)} />
                 </div>
                 <div className="table-responsive">
                     <table className="table table-striped table-bordered">
@@ -55,8 +75,9 @@ function ShowData() {
                         </thead>
                         <tbody>
 
-                            {
-                                foodReview.map((val) => {
+                            {fillterData.length > 0 ? (
+
+                                fillterData.map((val) => {
                                     return (
                                         <tr>
                                             <td>{val.name}</td>
@@ -65,12 +86,17 @@ function ShowData() {
                                             <td> {val.rating} <i className="bi bi-star-fill text-warning" /></td>
                                             <td> {val.typeoffood}</td>
                                             <td className="action-buttons">
-                                                <button className="btn btn-primary btn-sm w-100"><i className="bi bi-pencil-square fs-5" /></button>
-                                                <button className="btn btn-danger btn-sm w-100"><i className="bi bi-trash fs-5" /></button>
+                                                <button className="btn btn-primary btn-sm w-100" onClick={() => editPageData(val.id)}><i className="bi bi-pencil-square fs-5" /></button>
+                                                <button className="btn btn-danger btn-sm w-100" onClick={() => deleteData(val.id)}><i className="bi bi-trash fs-5" /></button>
                                             </td>
                                         </tr>
                                     )
                                 })
+                            ) : (
+                                <tr>
+                                    <th colSpan="6" >No data found</th>
+                                </tr>
+                            )
                             }
 
 

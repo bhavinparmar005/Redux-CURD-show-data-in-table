@@ -4,12 +4,15 @@ import './Home.css'
 import { useNavigate } from 'react-router-dom'
 import { addReviwe } from '../feature/FoodReviewSlice'
 import { useDispatch } from 'react-redux'
+import Swal from 'sweetalert2'
+
 
 function Home() {
 
     const dispacth = useDispatch()
     let nav = useNavigate()
     const [data, setData] = useState({
+        id: Math.floor(Math.random() * 1000),
         name: "",
         address: "",
         postcode: "",
@@ -36,7 +39,13 @@ function Home() {
             typeoffood: ""
         })
 
-
+        Swal.fire({
+            title: " Add Food Review Successfully",
+            icon: "success",
+            draggable: true,
+            showConfirmButton: false,
+            timer: 1900
+          });
 
         setTimeout(() => {
             nav('/showpage')
@@ -62,7 +71,7 @@ function Home() {
                         </div>
                         <div className="mb-3">
                             <label htmlFor="rating" className="form-label">Rating</label>
-                            <input type="number" className="form-control" id="rating" placeholder="Give a rating (1-5)" name='rating' onChange={resiveData} value={data.rating} />
+                            <input type="number" minLength={1} max={5} className="form-control" id="rating" placeholder="Give a rating (1-5)" name='rating' onChange={resiveData} value={data.rating} />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="typeOfFood" className="form-label">Type of Food</label>
@@ -75,7 +84,7 @@ function Home() {
                                 <option value={"Others"}>Others</option>
                             </select>
                         </div>
-                        <button type="submit" className="btn btn-primary w-100">Submit</button>
+                        <button type="submit" className="btn btn-primary w-100"> Food Review Submit</button>
                     </form>
                 </div>
             </div>
